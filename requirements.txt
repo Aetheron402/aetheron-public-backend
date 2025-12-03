@@ -5,8 +5,8 @@
 # needed for the structural example modules included in this
 # repository.
 #
-# The full production backend uses additional internal components
-# and dependencies that are not part of this template.
+# The full production backend uses additional internal components,
+# services, and dependencies that are not part of this template.
 
 fastapi
 uvicorn
@@ -15,9 +15,9 @@ python-dotenv
 celery
 redis
 
-reportlab
 jinja2
-
+requests
 boto3
 
-requests
+reportlab
+python-docx
