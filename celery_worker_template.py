@@ -13,6 +13,7 @@ from r2_client import r2_upload_bytes  # structural import
 from pdf_utils import build_aetheron_pdf
 from ledger_utils import add_entry
 from web_search import search_project_info  # structural import
+from export_utils import export_generic  # structural import for multi-format export
 
 # -------------------------------------------------------------------------
 # ENV + BOOTSTRAP
@@ -242,10 +243,17 @@ def process_prompt(asset_id, user_text, out_format, wallet):
     md_clean = run_llm(system_prompt, user_text, style_note)
 
     final_md = f"Prompt Quality Check: Optimization run completed.\n\n{md_clean}"
+
     fmt = (out_format or "pdf").lower()
 
     if fmt == "txt":
         filename, url = generate_txt(final_md)
+
+    elif fmt in ["md", "html", "docx"]:
+        buffer, fname = export_generic(fmt, final_md)
+        url = r2_upload_bytes(buffer.getvalue(), fname)
+        filename = fname
+
     else:
         filename, url = generate_pdf(
             asset_id,
@@ -279,10 +287,17 @@ def process_code(asset_id, code_text, out_format, wallet):
     md_clean = run_llm(system_prompt, code_text, style_note)
 
     final_md = f"Code Intelligence Asset\n\n{md_clean}"
+
     fmt = (out_format or "pdf").lower()
 
     if fmt == "txt":
         filename, url = generate_txt(final_md)
+
+    elif fmt in ["md", "html", "docx"]:
+        buffer, fname = export_generic(fmt, final_md)
+        url = r2_upload_bytes(buffer.getvalue(), fname)
+        filename = fname
+
     else:
         filename, url = generate_pdf(
             asset_id,
@@ -291,7 +306,7 @@ def process_code(asset_id, code_text, out_format, wallet):
             subtitle="Structure, Behavior & Risk Overview",
             md_text=final_md,
         )
-
+  
     add_entry(
         asset_id=asset_id,
         wallet=(wallet or "DEMO_OK"),
@@ -316,10 +331,17 @@ def process_tester(asset_id, user_text, out_format, wallet):
     md_clean = run_llm(system_prompt, user_text, style_note)
 
     final_md = f"Prompt Test Session\n\n{md_clean}"
+
     fmt = (out_format or "pdf").lower()
 
     if fmt == "txt":
         filename, url = generate_txt(final_md)
+
+    elif fmt in ["md", "html", "docx"]:
+        buffer, fname = export_generic(fmt, final_md)
+        url = r2_upload_bytes(buffer.getvalue(), fname)
+        filename = fname
+
     else:
         filename, url = generate_pdf(
             asset_id,
@@ -379,8 +401,15 @@ def process_contract_intel(asset_id, address, network, out_format, wallet):
     final_md = "\n".join(md_sections)
 
     fmt = (out_format or "pdf").lower()
+
     if fmt == "txt":
         filename, url = generate_txt(final_md)
+
+    elif fmt in ["md", "html", "docx"]:
+        buffer, fname = export_generic(fmt, final_md)
+        url = r2_upload_bytes(buffer.getvalue(), fname)
+        filename = fname
+
     else:
         filename, url = generate_pdf(
             asset_id,
