@@ -1,88 +1,81 @@
 
-# Aetheron Backend Template
+<h1 align="center">Aetheron Backend Template</h1>
 
-This repository provides a high-level template of the backend structure used in the Aetheron ecosystem.  
-It is intended **only for architectural and structural reference**.  
-No proprietary logic, internal workflows, or production functionality is included.
-
-The purpose of this template is to show the general organization of modules, workers, utilities, and configurations used in the real backend—without exposing any operational logic.
+<p align="center">
+  Structural backend template for the Aetheron X402 Component Marketplace.
+</p>
 
 ---
 
-## Overview of Included Files
+## 🧩 Overview
 
-### Application Structure
-- **Aetheron_template.py**  
-  High-level outline of the backend application’s structure.
+This repository contains the **public backend template** for the Aetheron platform.  
+It provides a high-level view of how the backend is organized, including:
 
-### Worker
-- **celery_worker_template.py**  
-  Example layout of a background worker module.
+- Application structure  
+- Worker system layout  
+- Utility module organization  
+- Storage client examples  
+- Template configuration files  
 
-### Utility Modules
-- **ledger_utils_template.py**  
-  Illustrates ledger-related utility structure.
+This template is intentionally simplified and does **not** contain  
+production logic, proprietary algorithms, payment systems, or internal processing.
 
-- **pdf_utils_template.py**  
-  Template for handling file export and output formatting.
-
-- **web_search_template.py**  
-  Structural placeholder for external query modules.
-
-### Storage Client
-- **r2_client_template.py**  
-  Example structure for an S3/R2-compatible storage interface.
+It exists purely for **architectural transparency**.
 
 ---
 
-## Configuration Files
+## 🗂 Template Structure
 
-- **.env.example**  
-  Safe template of environment variables used for local development structure.  
-  Production systems use additional and internal environment variables not included here.
+```
+/Aetheron_template.py          — Backend application structure (template)
+/celery_worker_template.py     — Background task worker (template)
+/ledger_utils_template.py      — Ledger utility layout
+/pdf_utils_template.py         — PDF & export utilities (template)
+/r2_client_template.py         — Object storage client (template)
+/web_search_template.py        — External data lookup structure (template)
 
-- **Procfile**  
-  Template process configuration file.
+/.env.example                  — Placeholder environment variables
+/Procfile                      — Deployment process structure (template)
+/railway.toml                  — Infrastructure config example
+/requirements.txt              — Template dependency list
+/runtime.txt                   — Runtime definition
+/.gitignore                    — Ignore cache, env, and outputs
 
-- **railway.toml**  
-  Template infrastructure configuration.
-
-- **requirements.txt**  
-  Minimal dependency list corresponding to this template structure.
-
-- **runtime.txt**  
-  Runtime environment definition.
-
-- **.gitignore**  
-  Ensures environment files, cache folders, and generated outputs are not committed.
-
----
-
-## Generated Files Directory
-
-A folder named `generated/` is included to represent where output files are written in the real backend system.  
-In this public template repository, the folder is intentionally kept empty except for a README file explaining its purpose.
+/generated/                    — Output directory (kept empty)
+```
 
 ---
 
-## Important Notice
+## 🧾 About This Template
 
-This repository is a **template representation only**.  
-It intentionally omits:
+This repository is a **structural representation only**.  
+It does not include:
 
-- Full backend logic  
-- Proprietary implementations  
-- Payment systems  
-- Pricing logic  
-- Internal integrations  
-- Sensitive operations  
-- Service connectors  
-- Any production-level features  
+- Internal business logic  
+- Payment validation  
+- Component processing  
+- AI or analysis pipelines  
+- Task execution logic  
+- Production integrations  
+- Pricing or token mechanics  
 
-Its purpose is to provide a clean, safe, high-level reference for contributors and developers who need insight into the backend’s structural layout.
+All logic inside the files is intentionally replaced with safe placeholders.
+
+The purpose is **to show the architecture**, not the backend implementation.
 
 ---
 
-## Contact
+## 🌐 Related
 
-For additional information about Aetheron or collaboration inquiries, please refer to the project's official communication channels.
+- **Aetheron Frontend:** Public UI repository  
+- **Main Website:** https://www.aetheron402.com  
+- **Twitter:** https://twitter.com/Aetheron402  
+- **Email:** team@aetheron402.com  
+
+---
+
+<p align="center">
+  <sub>Part of the Aetheron AI ecosystem — powered by X402.</sub>
+</p>
+
