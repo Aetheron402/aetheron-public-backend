@@ -1,156 +1,88 @@
+
 # Aetheron Backend Template
 
-This repository provides a high-level backend template used across the
-Aetheron ecosystem. It is designed to showcase the general structure,
-layout, and organization of the backend without exposing proprietary
-logic, internal integrations, or production-level implementation.
+This repository provides a high-level template of the backend structure used in the Aetheron ecosystem.  
+It is intended **only for architectural and structural reference**.  
+No proprietary logic, internal workflows, or production functionality is included.
 
-The template includes example service files, task workers, utility
-modules, configuration samples, and folder structures that illustrate
-how the Aetheron backend is organized. The real production backend
-contains additional logic, modules, and integrations that are not part
-of this public template.
+The purpose of this template is to show the general organization of modules, workers, utilities, and configurations used in the real backend—without exposing any operational logic.
 
 ---
 
-## Features
+## Overview of Included Files
 
-- Example backend application structure
-- Template Celery task worker
-- Storage client examples (e.g., R2 / S3-compatible)
-- Utility modules for ledger handling, PDF generation, and web queries
-- Deployment examples (Procfile, runtime config, Railway template)
-- Environment variable template for safe configuration
-- Placeholder directory for generated files
+### Application Structure
+- **Aetheron_template.py**  
+  High-level outline of the backend application’s structure.
 
-All template files are simplified versions intended for educational,
-structural, and integration reference.
+### Worker
+- **celery_worker_template.py**  
+  Example layout of a background worker module.
 
----
+### Utility Modules
+- **ledger_utils_template.py**  
+  Illustrates ledger-related utility structure.
 
-## Repository Structure
+- **pdf_utils_template.py**  
+  Template for handling file export and output formatting.
 
-```
-aetheron-public-backend/
-│
-├── Aetheron_template.py          # Main backend application structure (template)
-├── celery_worker_template.py     # Task worker layout (template)
-├── ledger_utils_template.py      # Ledger handling utilities (template)
-├── pdf_utils_template.py         # Export utilities (template)
-├── r2_client_template.py         # Object storage client (template)
-├── web_search_template.py        # Web search and request flow (template)
-│
-├── Procfile                      # Deployment process definition (template)
-├── railway.toml                  # Railway deployment configuration (template)
-├── requirements.txt              # Python dependencies (template version)
-├── runtime.txt                   # Runtime environment specification
-├── .env.example                  # Safe environment variable template
-├── .gitignore                    # Ignore cache, env, and generated files
-│
-└── generated/
-      └── README.md               # Folder for generated outputs (kept empty)
-```
+- **web_search_template.py**  
+  Structural placeholder for external query modules.
+
+### Storage Client
+- **r2_client_template.py**  
+  Example structure for an S3/R2-compatible storage interface.
 
 ---
 
-## Getting Started
+## Configuration Files
 
-### 1. Clone the Repository
+- **.env.example**  
+  Safe template of environment variables used for local development structure.  
+  Production systems use additional and internal environment variables not included here.
 
-```
-git clone https://github.com/YOUR_USERNAME/aetheron-public-backend.git
-cd aetheron-public-backend
-```
+- **Procfile**  
+  Template process configuration file.
 
----
+- **railway.toml**  
+  Template infrastructure configuration.
 
-### 2. Install Dependencies
+- **requirements.txt**  
+  Minimal dependency list corresponding to this template structure.
 
-Ensure you are using Python 3.10 or above.
+- **runtime.txt**  
+  Runtime environment definition.
 
-```
-pip install -r requirements.txt
-```
-
----
-
-### 3. Configure Environment Variables
-
-Copy the example file:
-
-```
-cp .env.example .env
-```
-
-Fill in any necessary values for local testing.  
-The real production environment includes additional variables not shown in this template.
+- **.gitignore**  
+  Ensures environment files, cache folders, and generated outputs are not committed.
 
 ---
 
-### 4. Run the Backend Template
+## Generated Files Directory
 
-Start the application:
-
-```
-uvicorn Aetheron_template:app --host 0.0.0.0 --port 8000
-```
-
-Run the Celery worker (optional):
-
-```
-celery -A celery_worker_template.celery worker --loglevel=info
-```
-
-Note: These commands represent the template process flow and do not run
-the full production backend logic.
-
----
-
-## Deployment
-
-The repository includes template configuration files that reflect how a
-backend service may be deployed on platforms such as Railway, Render,
-or Heroku. These files are structural examples only.
-
-- `Procfile`
-- `railway.toml`
-- `runtime.txt`
-
----
-
-## Generated Files
-
-The `generated/` folder is included for reference and normally stores
-runtime output such as exported files. In this template repository,
-the directory is intentionally kept empty.
+A folder named `generated/` is included to represent where output files are written in the real backend system.  
+In this public template repository, the folder is intentionally kept empty except for a README file explaining its purpose.
 
 ---
 
 ## Important Notice
 
-This repository is a **template representation** of the Aetheron backend
-and **does not include**:
+This repository is a **template representation only**.  
+It intentionally omits:
 
-- Internal business logic  
-- Proprietary algorithms or workflows  
-- Production integrations  
-- Pricing, payment handling, or sensitive configuration  
-- Full component functionality  
+- Full backend logic  
+- Proprietary implementations  
+- Payment systems  
+- Pricing logic  
+- Internal integrations  
+- Sensitive operations  
+- Service connectors  
+- Any production-level features  
 
-It is intended purely for structural reference and developer onboarding.
-
----
-
-## License
-
-This template is provided for reference and educational purposes.  
-Usage terms may follow the main Aetheron project license or be adapted
-as needed.
+Its purpose is to provide a clean, safe, high-level reference for contributors and developers who need insight into the backend’s structural layout.
 
 ---
 
 ## Contact
 
-For questions, contributions, or access to the full Aetheron ecosystem,
-please visit the main project website or reach out through the official
-communication channels.
+For additional information about Aetheron or collaboration inquiries, please refer to the project's official communication channels.
