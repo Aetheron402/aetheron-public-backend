@@ -1,0 +1,28 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+restartPolicy = "on_failure"
+
+# -------------------------------------------------------------------
+# Backend Service (FastAPI / Uvicorn)
+# -------------------------------------------------------------------
+[services.backend]
+startCommand = "uvicorn Aetheron_template:app --host 0.0.0.0 --port ${PORT}"
+envVars = { ENV = "production" }
+
+
+# -------------------------------------------------------------------
+# Worker Service 1 (Celery)
+# -------------------------------------------------------------------
+[services.worker1]
+startCommand = "celery -A celery_worker_template.celery worker --loglevel=info -n worker1"
+envVars = { ENV = "production" }
+
+
+# -------------------------------------------------------------------
+# Worker Service 2 (Celery)
+# -------------------------------------------------------------------
+[services.worker2]
+startCommand = "celery -A celery_worker_template.celery worker --loglevel=info -n worker2"
+envVars = { ENV = "production" }
