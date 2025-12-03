@@ -32,6 +32,7 @@ It exists purely for **architectural transparency**.
 /celery_worker_template.py     — Background task worker (template)
 /ledger_utils_template.py      — Ledger utility layout
 /pdf_utils_template.py         — PDF & export utilities (template)
+/export_utils_template.py      — Multi-format export utilities (template)
 /r2_client_template.py         — Object storage client (template)
 /web_search_template.py        — External data lookup structure (template)
 
