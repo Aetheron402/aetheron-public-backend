@@ -1,0 +1,6 @@
+Aetheron Agent Module (Placeholder)
+
+This directory displays the internal structure used by Aetheron’s production-grade agents.
+For security and intellectual property protection, the operational source code is not included.
+
+Licensed users receive encrypted agent builds directly through the Aetheron interface.
