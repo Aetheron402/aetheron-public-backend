@@ -1,34 +1,32 @@
 """
 Aetheron — PDF Utility Template
--------------------------------
+--------------------------------
 
-This file provides a structural template for the PDF generation
-module used across the Aetheron backend.
+This file provides a documentation-safe structural outline of the
+Aetheron PDF generation engine.
 
-It is intended to demonstrate:
+The production system (ref: pdf_utils.py) includes:
+• Multi-layer branded page frame (header, footer, watermark)
+• Styled cover page with metadata tables
+• Section parsing, numbering, and adaptive spacing
+• Metric extraction + MetricCard rendering
+• Radar chart generation with safe polygon handling
+• Paragraph, bullet, codeblock, and table formatting
+• Cleanup and normalization of markdown input
+• Certification block and verification footer
+• Export to R2 cloud storage and local /generated directory
 
-- How PDF building functions are organized
-- How ReportLab structures are referenced
-- How sections, headers, and layout components relate
-- How a file-like buffer and filename are returned
-
-All content generation, formatting rules, branding details, and
-internal document structures have been simplified for template use.
+This template removes all styling, rendering, layout, and formatting
+logic, while preserving the structure, names, and expected behavior.
 """
 
 import io
-import os
-import time
 import re
+import time
 
 from reportlab.platypus import (
-    SimpleDocTemplate,
-    Paragraph,
-    Spacer,
-    Table,
-    TableStyle,
-    PageBreak,
-    Flowable,
+    SimpleDocTemplate, Paragraph, Spacer,
+    Table, TableStyle, PageBreak, Flowable
 )
 from reportlab.lib import colors
 from reportlab.lib.styles import StyleSheet1, ParagraphStyle
@@ -38,7 +36,7 @@ from reportlab.pdfgen.canvas import Canvas
 
 
 # -------------------------------------------------------------------------
-# Color Palette (Template)
+# Brand Colors (Template Only)
 # -------------------------------------------------------------------------
 PAGE_BG        = colors.HexColor("#FFFFFF")
 ACCENT         = colors.HexColor("#6366F1")
@@ -51,63 +49,54 @@ CODE_BG        = colors.HexColor("#F1F5F9")
 
 
 # -------------------------------------------------------------------------
-# Header + Footer Frames (Template)
+# Header + Watermark (Structure Only)
 # -------------------------------------------------------------------------
-
 def _draw_page_frame(c: Canvas, title: str):
     """
-    Draws a simple template header frame.
-    The real backend uses a branded design.
+    Template header + watermark renderer.
+
+    REAL BACKEND:
+    - Draws branding bar
+    - Adds Aetheron watermark
+    - Places title text using specific layout rules
+
+    TEMPLATE:
+    - No rendering logic included.
     """
-    w, h = c._pagesize
-    c.saveState()
-
-    # Header area
-    c.setFillColor(colors.white)
-    c.rect(0, h - 60, w, 60, fill=1, stroke=0)
-
-    # Divider
-    c.setStrokeColor(BORDER)
-    c.setLineWidth(0.6)
-    c.line(40, h - 60, w - 40, h - 60)
-
-    # Title label
-    c.setFont("Helvetica-Bold", 10)
-    c.setFillColor(TEXT_MAIN)
-    c.drawString(48, h - 45, title or "Aetheron Document")
-
-    c.restoreState()
+    pass
 
 
+# -------------------------------------------------------------------------
+# Footer (Structure Only)
+# -------------------------------------------------------------------------
 def _footer(c: Canvas, doc):
     """
-    Draws a simple footer with page numbering.
+    Template footer renderer.
+
+    REAL BACKEND:
+    - Page numbering
+    - Legal disclaimer text
+    - Visual divider rules
+
+    TEMPLATE:
+    - No implementation.
     """
-    w, h = c._pagesize
-    c.saveState()
-
-    c.setStrokeColor(BORDER)
-    c.setLineWidth(0.5)
-    c.line(52, 40, w - 48, 40)
-
-    c.setFont("Helvetica", 7)
-    c.setFillColor(TEXT_MUTED)
-
-    c.drawString(52, 28, "Aetheron — Document")
-    c.drawRightString(w - 48, 28, f"Page {doc.page}")
-
-    c.restoreState()
+    pass
 
 
 # -------------------------------------------------------------------------
-# Metric Card Flowable (Template)
+# Metric Card Placeholder
 # -------------------------------------------------------------------------
-
 class MetricCard(Flowable):
     """
-    Example metric card used to display scoring or small numeric details.
+    Structure-only version of the metric scoring card used in
+    Aetheron reports.
 
-    Template version includes layout only.
+    REAL BACKEND:
+    - Draws a rounded card with label, value, max, iconography.
+
+    TEMPLATE:
+    - Layout omitted.
     """
 
     def __init__(self, name: str, value: float, max_value=10):
@@ -119,101 +108,70 @@ class MetricCard(Flowable):
         self.height = 0.9 * inch
 
     def draw(self):
-        c = self.canv
-
-        c.setFillColor(CARD_BG)
-        c.roundRect(0, 0, self.width, self.height, 6, fill=1, stroke=0)
-
-        c.setFont("Helvetica-Bold", 8)
-        c.setFillColor(TEXT_MAIN)
-        c.drawString(8, self.height - 18, self.name)
-
-        c.setFont("Helvetica-Bold", 14)
-        c.setFillColor(ACCENT)
-        c.drawString(8, self.height - 38, f"{self.value:.1f}")
-
-        c.setFont("Helvetica", 7)
-        c.setFillColor(TEXT_MUTED)
-        c.drawString(8, 10, f"Out of {self.max_value}")
+        """Template does not render visuals."""
+        pass
 
 
 # -------------------------------------------------------------------------
-# Radar Chart Placeholder (Template)
+# Radar Chart Placeholder
 # -------------------------------------------------------------------------
-
 def add_radar_chart(values, labels, size=200):
     """
     Template radar chart placeholder.
-    In the full backend this generates a polygon radar graph.
 
-    Template returns None to preserve structure.
+    REAL BACKEND:
+    - Generates polygon charts with safe numeric handling.
+    - Handles malformed input, scales values, applies styling.
+
+    TEMPLATE:
+    - Returns None.
     """
     return None
 
 
 # -------------------------------------------------------------------------
-# Main PDF Builder (Template)
+# MAIN PDF BUILDER (STRUCTURE ONLY)
 # -------------------------------------------------------------------------
-
 def build_aetheron_pdf(asset_id, timestamp, wallet, title, subtitle, md_text):
     """
     Template PDF generator.
 
-    In the full backend:
-    - Text is parsed into sections
-    - Metrics are extracted
-    - Charts, tables, and styled content are added
-    - The PDF is rendered and uploaded for download
+    REAL BACKEND:
+    - Parses markdown-like structured data
+    - Extracts metrics, removes noise, normalizes paragraphs
+    - Builds cover page with metadata table
+    - Inserts MetricCards
+    - Adds radar chart (if metrics present)
+    - Processes bullets, code blocks, numbered headings
+    - Adds certification block
+    - Writes file to /generated and returns (buffer, filename)
 
-    Template version:
-    - Produces a simple paragraph-based PDF
-    - Returns (buffer, filename)
+    TEMPLATE:
+    - Returns an empty placeholder PDF buffer with matching signature.
     """
 
     buffer = io.BytesIO()
 
-    # Basic PDF document
+    # Basic template doc (no real layout)
     doc = SimpleDocTemplate(
         buffer,
         pagesize=letter,
         rightMargin=60,
         leftMargin=72,
-        topMargin=140,
+        topMargin=170,
         bottomMargin=60,
     )
 
-    doc.title = title or "Aetheron Document"
-
-    # Styles
+    # Minimal placeholder story
     styles = StyleSheet1()
-    styles.add(ParagraphStyle(name="Title", fontName="Helvetica-Bold", fontSize=18, textColor=TEXT_MAIN))
-    styles.add(ParagraphStyle(name="Subtitle", fontName="Helvetica", fontSize=12, textColor=TEXT_MUTED))
-    styles.add(ParagraphStyle(name="Body", fontName="Helvetica", fontSize=10, textColor=TEXT_MAIN, leading=15))
+    styles.add(ParagraphStyle(name="Body", fontSize=12))
+    story = [Paragraph("Aetheron PDF Template — No Rendering Logic Included", styles["Body"])]
 
-    story = []
-
-    # Title Page (Template)
-    story.append(Spacer(1, 0.8 * inch))
-    story.append(Paragraph(title or "Aetheron Document", styles["Title"]))
-    story.append(Spacer(1, 0.2 * inch))
-    story.append(Paragraph(subtitle or "", styles["Subtitle"]))
-    story.append(PageBreak())
-
-    # Simple text content
-    clean_text = (md_text or "").strip()
-    blocks = re.split(r"\n\s*\n", clean_text)
-
-    for block in blocks:
-        if not block.strip():
-            continue
-        story.append(Paragraph(block.replace("\n", "<br/>"), styles["Body"]))
-        story.append(Spacer(1, 0.2 * inch))
-
-    # Build the PDF
+    # Build empty doc using placeholders
     doc.build(
         story,
-        onFirstPage=lambda c, d: (_draw_page_frame(c, doc.title), _footer(c, d)),
-        onLaterPages=lambda c, d: (_draw_page_frame(c, doc.title), _footer(c, d)),
+        onFirstPage=lambda c, d: None,
+        onLaterPages=lambda c, d: None,
     )
 
     buffer.seek(0)
