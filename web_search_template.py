@@ -2,52 +2,51 @@
 Aetheron — Web Search Utility Template
 --------------------------------------
 
-This module provides a structural template for project-related
-information lookup used within the backend.
+This file provides a documentation-safe template for the project
+discovery system used in the Aetheron backend.
 
-The template illustrates:
-- Function naming
-- Input/output structure
-- Expected keys in returned dictionaries
+The real implementation (see web_search.py) includes:
+• SerpAPI-powered Google search queries
+• URL classification (website, twitter, telegram, discord)
+• HTML extraction via BeautifulSoup
+• Description, team, and roadmap parsing
+• Structured content normalization
+• Error handling and timeout-protected scraping
 
-All network calls and content extraction steps are replaced with
-placeholder logic suitable for public repositories.
+All logic, network calls, and parsing algorithms are removed here.
+Only structure, signatures, and output shapes are preserved.
 """
+
+
+# -------------------------------------------------------------------------
+# TEMPLATE SEARCH FUNCTION (STRUCTURE ONLY)
+# -------------------------------------------------------------------------
 
 def search_project_info(query: str, api_key: str = None):
     """
-    Template project information lookup.
+    Template project discovery helper.
 
-    Parameters:
-        query (str): The search query.
-        api_key (str): Included for structural compatibility.
+    REAL BACKEND (ref: web_search.py):
+    • Performs a SerpAPI Google search
+    • Extracts organic results
+    • Categorizes URLs into socials + websites
+    • Scrapes the primary website for:
+        - description_extract
+        - team_extract
+        - roadmap_extract
+    • Uses keyword detection for semantic blocks
+    • Returns a structured dictionary of findings
 
-    Returns:
-        dict: Structured information containing:
-            - website_candidates
-            - twitter_candidates
-            - telegram_candidates
-            - discord_candidates
-            - description_extract
-            - team_extract
-            - roadmap_extract
+    TEMPLATE VERSION:
+    • Returns a fixed-placeholder structure only.
     """
 
-    # Template output with placeholder values
     return {
-        "website_candidates": [
-            "https://example.com"
-        ],
-        "twitter_candidates": [
-            "https://twitter.com/example"
-        ],
-        "telegram_candidates": [
-            "https://t.me/example"
-        ],
-        "discord_candidates": [
-            "https://discord.gg/example"
-        ],
-        "description_extract": "Example project description text.",
-        "team_extract": "Example team section text.",
-        "roadmap_extract": "Example roadmap or milestones text.",
+        "website_candidates": [],
+        "twitter_candidates": [],
+        "telegram_candidates": [],
+        "discord_candidates": [],
+        "description_extract": None,
+        "team_extract": None,
+        "roadmap_extract": None,
     }
