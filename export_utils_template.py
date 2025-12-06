@@ -1,11 +1,22 @@
 """
 export_utils_template.py
 ------------------------
-This file provides a high-level outline of the export utilities used in
-the Aetheron backend. The full production implementation includes logic
-for generating and formatting output files such as TXT, MD, HTML, and
-DOCX. Only the structural layout is included here.
+This file provides a documentation-safe structural outline of the
+export utilities used in the Aetheron backend.
+
+The real implementation includes:
+• TXT, MD, HTML, and DOCX generation
+• Byte-stream handling for Celery workers
+• Consistent cross-format export rules
+• HTML sanitization + styling system
+• DOCX paragraph construction using python-docx
+• Format routing via export_generic()
+
+All production logic and formatting details have been intentionally
+removed. Only function signatures and high-level behavior remain.
 """
+
+import io
 
 # -------------------------------------------------
 # TXT EXPORT (template)
@@ -13,7 +24,14 @@ DOCX. Only the structural layout is included here.
 def export_txt(content: str):
     """
     Template function for TXT export.
-    Production logic is not included in this public template.
+
+    REAL BACKEND:
+    - Builds UTF-8 encoded text output
+    - Wraps data in a BytesIO buffer
+    - Returns (buffer, filename)
+
+    TEMPLATE:
+    - Placeholder only.
     """
     pass
 
@@ -24,7 +42,13 @@ def export_txt(content: str):
 def export_md(content: str):
     """
     Template function for Markdown export.
-    Production implementation removed.
+
+    REAL BACKEND:
+    - Writes markdown bytes to memory
+    - Ensures UTF-8 compliance
+
+    TEMPLATE:
+    - Placeholder.
     """
     pass
 
@@ -35,7 +59,14 @@ def export_md(content: str):
 def export_html(content: str):
     """
     Template function for HTML export.
-    Real formatting logic is not part of this template.
+
+    REAL BACKEND:
+    - Converts markdown/plaintext to styled HTML
+    - Handles safe line-break rendering
+    - Writes encoded HTML into a BytesIO stream
+
+    TEMPLATE:
+    - Placeholder only.
     """
     pass
 
@@ -46,7 +77,14 @@ def export_html(content: str):
 def export_docx(content: str):
     """
     Template function for DOCX export.
-    Real document generation is intentionally omitted.
+
+    REAL BACKEND:
+    - Constructs a .docx document with python-docx
+    - Adds paragraphs line-by-line
+    - Returns binary file object
+
+    TEMPLATE:
+    - Placeholder.
     """
     pass
 
@@ -56,8 +94,14 @@ def export_docx(content: str):
 # -------------------------------------------------
 def export_generic(format: str, content: str):
     """
-    Selects the appropriate export type.
-    Only structure is shown here; the real backend includes the complete
-    export logic across all supported formats.
+    Routing function used by Celery workers.
+
+    REAL BACKEND:
+    - Selects the appropriate exporter based on format
+    - Falls back to TXT if unknown
+    - Returns (buffer, filename)
+
+    TEMPLATE:
+    - Structure only; no execution logic.
     """
     pass
