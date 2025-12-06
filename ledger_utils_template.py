@@ -2,14 +2,27 @@
 Aetheron — Ledger Module Template
 ---------------------------------
 
-This file provides a structural template for the ledger system used
-to track generated assets, component usage, and activity history.
+This file provides a high-level, documentation-safe template of the
+Aetheron ledger system. The production implementation uses PostgreSQL
+to track generated assets, component activity, billing records, and
+user history across the platform.
 
-It illustrates the expected function names, parameters, and return
-formats used throughout the backend and worker system.
+The template preserves:
+• Function names and signatures
+• Expected parameters
+• Returned value shapes
+• High-level responsibilities of each method
 
-All functions contain placeholder implementations designed for
-reference and development purposes.
+The real backend includes:
+• PostgreSQL connections
+• Structured INSERT/SELECT queries
+• Indexed lookups by wallet and timestamp
+• Pagination support
+• Billing history tracking
+• Automatic timestamping
+• Full error handling & connection pooling
+
+All operational logic has been removed from this public template.
 """
 
 import os
@@ -17,8 +30,9 @@ import time
 
 
 # -------------------------------------------------------------------------
-# ENVIRONMENT CONFIG (STRUCTURAL)
+# ENVIRONMENT CONFIG (STRUCTURAL ONLY)
 # -------------------------------------------------------------------------
+
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
 DB_NAME = os.getenv("DB_NAME")
@@ -34,27 +48,30 @@ def _conn():
     """
     Opens a placeholder database connection.
 
-    In a real environment:
-    - This establishes a connection to a SQL backend.
-    - Queries are executed through a cursor.
-    - Rows are committed and returned.
+    REAL BACKEND:
+    - Creates a PostgreSQL connection using psycopg2.
+    - Provides a cursor for executing INSERT/SELECT queries.
+    - Enforces transaction boundaries.
 
-    Template version:
-    - Returns None and serves as a structural placeholder.
+    TEMPLATE:
+    - Returns None.
     """
     return None
 
 
 # -------------------------------------------------------------------------
-# ROW SERIALIZATION HELPERS
+# ROW SERIALIZATION
 # -------------------------------------------------------------------------
 
 def row_to_dict(row):
     """
-    Converts a ledger row into a dictionary.
+    Converts a ledger row tuple into a dictionary.
 
-    Expected row format:
+    Expected schema:
     (id, asset_id, wallet, tx_signature, component, price, status, filename, timestamp)
+
+    TEMPLATE:
+    - Converts a mock row for structural purposes.
     """
     if not row:
         return None
@@ -73,39 +90,39 @@ def row_to_dict(row):
 
 
 # -------------------------------------------------------------------------
-# LEDGER SETUP (TEMPLATE)
+# LEDGER INITIALIZATION (TEMPLATE)
 # -------------------------------------------------------------------------
 
 def init_ledger():
     """
-    Initializes the ledger storage.
+    Initializes ledger storage.
 
-    Template version:
-    - No real database operations.
-    - Included for structural completeness.
+    REAL BACKEND:
+    - Creates the `ledger` table if missing.
+    - Defines the schema used for asset tracking.
+
+    TEMPLATE:
+    - No implementation.
     """
     pass
 
 
 # -------------------------------------------------------------------------
-# INSERT ENTRY (TEMPLATE)
+# INSERT ENTRY
 # -------------------------------------------------------------------------
 
 def add_entry(*, asset_id, wallet, tx_sig, component, price, status, filename):
     """
     Adds a new ledger entry.
 
-    Parameters mirror the real backend usage and are:
-    - asset_id: unique ID per generated asset
-    - wallet: user wallet string
-    - tx_sig: associated signature (if any)
-    - component: component name
-    - price: numeric component cost
-    - status: "success" or "failed"
-    - filename: output PDF/TXT file associated with the request
+    REAL BACKEND:
+    - Inserts a row into PostgreSQL.
+    - Logs asset generation, billing, and status.
+    - Records a UNIX timestamp.
+
+    TEMPLATE:
+    - Returns a mock row dict for structural testing.
     """
-    # Placeholder implementation:
-    # In production, this writes a row to persistent storage.
     return {
         "asset_id": asset_id,
         "wallet": wallet,
@@ -119,56 +136,62 @@ def add_entry(*, asset_id, wallet, tx_sig, component, price, status, filename):
 
 
 # -------------------------------------------------------------------------
-# FETCH PAGINATED BY WALLET (TEMPLATE)
+# PAGINATED LOOKUP
 # -------------------------------------------------------------------------
 
 def get_by_wallet_paginated(wallet, limit=5, offset=0):
     """
     Returns a paginated list of ledger entries for a wallet.
 
-    Template version:
-    - Returns an empty list with the expected format shape.
+    REAL BACKEND:
+    - SELECT … ORDER BY timestamp DESC LIMIT/OFFSET.
+
+    TEMPLATE:
+    - Returns an empty list.
     """
     return []
 
 
 # -------------------------------------------------------------------------
-# COUNT ENTRIES BY WALLET (TEMPLATE)
+# COUNT ENTRIES BY WALLET
 # -------------------------------------------------------------------------
 
 def get_wallet_entry_count(wallet):
     """
-    Returns the number of ledger entries for a wallet.
+    Returns total ledger entries for a wallet.
 
-    Template version:
-    - Returns 0 for demonstration.
+    REAL BACKEND:
+    - SELECT COUNT(*) FROM ledger WHERE wallet = %s;
+
+    TEMPLATE:
+    - Always 0.
     """
     return 0
 
 
 # -------------------------------------------------------------------------
-# FETCH MOST RECENT (TEMPLATE)
+# RECENT ENTRIES
 # -------------------------------------------------------------------------
 
 def get_recent(limit=50):
     """
-    Returns the most recent ledger entries.
+    Returns the most recent ledger entries overall.
 
-    Template version:
-    - Returns an empty list with the expected format.
+    TEMPLATE:
+    - Empty list only.
     """
     return []
 
 
 # -------------------------------------------------------------------------
-# FETCH BY WALLET (TEMPLATE)
+# NON-PAGINATED WALLET LOOKUP
 # -------------------------------------------------------------------------
 
 def get_by_wallet(wallet, limit=100):
     """
     Returns recent ledger entries for a wallet.
 
-    Template version:
-    - Returns an empty list.
+    TEMPLATE:
+    - Empty list.
     """
     return []
